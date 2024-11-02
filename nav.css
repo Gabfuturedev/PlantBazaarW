@@ -475,4 +475,27 @@ body.modal-open {
     background-color: #ccc; /* Light gray background */
     color: #666; /* Darker gray text */
     cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+} .valid { color: green; font-weight: bold; }
+.invalid { color: red; }
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+#signupPassword {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Right padding for the icon */
+    font-size: 16px;
+    border: 1px solid #ccc; /* Optional: Add border styling */
+    border-radius: 4px; /* Optional: Add rounded corners */
+}
+
+#togglePassword {
+    position: absolute;
+    top: 15%;
+    right: 10px; /* Adjust this value for spacing from the right edge */
+    transform: translateY(10%);
+    cursor: pointer;
+    color: #888; /* Optional: Change color */
+    font-size: 16px; /* Optional: Adjust icon size */
 }

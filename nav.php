@@ -103,8 +103,52 @@ if ($isLoggedIn) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    function checkPasswordRequirements() {
+        const password = document.getElementById("signupPassword").value;
+
+        console.log("Current password:", password); // Log the current password value
+
+        // Check length
+        const lengthValid = password.length >= 8;
+        document.getElementById("length").classList.toggle("valid", lengthValid);
+        document.getElementById("length").classList.toggle("invalid", !lengthValid);
+        console.log("Length valid:", lengthValid); // Log length check result
+
+        // Check uppercase
+        const uppercaseValid = /[A-Z]/.test(password);
+        document.getElementById("uppercase").classList.toggle("valid", uppercaseValid);
+        document.getElementById("uppercase").classList.toggle("invalid", !uppercaseValid);
+        console.log("Uppercase valid:", uppercaseValid); // Log uppercase check result
+
+        // Check lowercase
+        const lowercaseValid = /[a-z]/.test(password);
+        document.getElementById("lowercase").classList.toggle("valid", lowercaseValid);
+        document.getElementById("lowercase").classList.toggle("invalid", !lowercaseValid);
+        console.log("Lowercase valid:", lowercaseValid); // Log lowercase check result
+
+        // Check number
+        const numberValid = /\d/.test(password);
+        document.getElementById("number").classList.toggle("valid", numberValid);
+        document.getElementById("number").classList.toggle("invalid", !numberValid);
+        console.log("Number valid:", numberValid); // Log number check result
+
+        // Check special character
+        const specialValid = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        document.getElementById("special").classList.toggle("valid", specialValid);
+        document.getElementById("special").classList.toggle("invalid", !specialValid);
+        console.log("Special character valid:", specialValid); // Log special character check result
+    }
+
+    // Event listener to check password requirements on each input
+    document.getElementById("signupPassword").addEventListener("input", checkPasswordRequirements);
+});
+
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="jquery.js"></script>
@@ -227,9 +271,17 @@ if ($isLoggedIn) {
             </div>
 
             <div class="form-group">
-                <label for="signupPassword">Password</label>
-                <input type="password" id="signupPassword" name="password" placeholder="Password" required>
-            </div>
+    <label for="signupPassword">Password</label>
+    <input type="password" id="signupPassword" name="password" placeholder="Password" required>
+    <i id="togglePassword" style="display: none;" class="fas fa-eye"></i>
+    <h6 id="message_header" class="message_header" style="display: none;">Recommended password can include:</h6>
+    <p id="length" class="message" style="display: none;">At least 8 characters</p>
+    <p id="uppercase" class="message" style="display: none;">At least one uppercase letter</p>
+    <p id="lowercase" class="message" style="display: none;">At least one lowercase letter</p>
+    <p id="number" class="message" style="display: none;">At least one number</p>
+    <p id="special" class="message" style="display: none;">At least one special character</p>
+</div>
+
 
             <div class="form-group">
                 <label for="signupFirstName">First Name</label>
@@ -286,6 +338,36 @@ if ($isLoggedIn) {
         event.preventDefault(); // Prevent the default action if not a number
     }
 }
+const passwordInput = document.getElementById("signupPassword");
+    const messageHeader = document.getElementById("message_header");
+    const messages = document.querySelectorAll(".message");
+    let togglePassword = document.getElementById("togglePassword");
+
+    // Show the recommendations when the password field is in focus
+    passwordInput.addEventListener("focus", () => {
+        messageHeader.style.display = "block";
+        messages.forEach(message => message.style.display = "block");
+        togglePassword.style.display = "inline-block";
+    });
+
+    // Hide the recommendations when the password field loses focus
+    passwordInput.addEventListener("blur", () => {
+        messageHeader.style.display = "none";
+        messages.forEach(message => message.style.display = "none");
+        togglePassword.style.display = "none";
+    });
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordField = document.getElementById("signupPassword");
+
+    // Toggle the type attribute
+    const isPasswordVisible = passwordField.type === "password";
+    passwordField.type = isPasswordVisible ? "text" : "password";
+    
+    // Toggle the icon class for the eye (show/hide)
+    this.classList.toggle("fa-eye-slash", isPasswordVisible);
+    this.classList.toggle("fa-eye", !isPasswordVisible);
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById('signupPhoneNumber');
     input.addEventListener('keypress', isNumber);
@@ -850,7 +932,8 @@ closeButton.onclick = function() {
             })
             .catch(error => console.error('Error:', error));
         });
-     
+
+   
 </script>
 </body>
 </html>
